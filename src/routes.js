@@ -1,7 +1,8 @@
 import  WatchAnime  from "./components/WatchAnime.vue";
 import AnimeList from './components/AnimeList'
 import Home from './components/Home.vue';
-import PopularAnime from './components/PopularAnime'
+import PopularAnime from './components/PopularAnime';
+import AnimeDetail from './components/AnimeDetail';
 
 export const routes = [
     { 
@@ -15,6 +16,10 @@ export const routes = [
     {
         path: '/popularAnime',
         component: PopularAnime
+    },
+    {
+        path: '/animeDetail',
+        component: AnimeDetail
     },
     { 
         path: '/watch', 
