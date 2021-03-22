@@ -11,34 +11,20 @@
       <br>
       <strong>Anime Info: </strong><span>{{videoInfo.animeInfo}}</span>
       <hr>
-
-      <div class="row">
-        <div class="col-lg-6">
-          <a href="#">Previous</a>
-        </div>
-        <div class="col-lg-6" >
-          <a href="#" style="float: right">Next</a>
-        </div>
-      </div>
-
+      <episode-list :paginatedEpisodeList="paginatedEpisodeList" @selectedEpisode="gotoEpisode" ></episode-list>
       
-      <div class="row">
-        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 col-3" v-for="( item, index ) in paginatedEpisodeList" :key="index" style="margin: 10px" >
-          <button type="button" class="btn btn-secondary" @click="gotoEpisode( item + 1 )" >
-             Episode {{item + 1}}
-          </button>
-        </div>
-        
-        
-      </div>
     </div>
   </div>
 </template>
 
 <script>
   const cheerio = require("cheerio");
-
+  import EpisodeList from './EpisodeList';
   export default {
+
+    components: {
+      EpisodeList
+    },
 
     data: () => ({
       videoSource: '',
