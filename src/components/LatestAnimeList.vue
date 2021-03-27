@@ -9,6 +9,15 @@
             <div class="col-lg-3 col-md-4 col-sm-6 col-12" v-for="(item, index) of animeList" :key="index">
                 <anime-display-card  :image="item.img" :title="item.name" :link="item.link"  @selectedAnime="gotoAnimeWatcher"></anime-display-card>
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item "><a class="page-link " @click="gotoNextorPrevious( -1 )">Previous</a></li>
+                    <li class="page-item" :class="page + 1 == currentPage ? 'active': ''" v-for="page in pages" :key="page">
+                        <a class="page-link" @click="turnPage( page + 1 )">{{ page + 1 }}</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" @click="gotoNextorPrevious( 1 )">Next</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
 </template>
@@ -27,19 +36,17 @@ export default {
 
     data: () => ({
             isLoading: false,
-            animeList: []
+            animeList: [],
+            pages: [],
+            currentPage: 1
         }),
     
     methods: {
 
-        gotoAnimeWatcher( title ) {
-            this.$router.push({ path: 'watch', query: {title: title} })
-        }
-    },
-
-     mounted() {
+        getLatestAnime() {
             this.isLoading = true;
-            this.$http.get( 'https://ajax.gogo-load.com/ajax/page-recent-release.html?page=1&type=1' )
+            
+             this.$http.get( `https://ajax.gogo-load.com/ajax/page-recent-release.html?page=${ this.currentPage }&type=1` )
             .then((response) => {
                  //handling the success
                 const html = response.data;
@@ -64,15 +71,46 @@ export default {
                     animeList.push( animeContainer );
 
                 });
+
                 this.animeList = animeList;
                 this.isLoading = false;
 
             });
+        },
+
+        gotoAnimeWatcher( title ) {
+            this.$router.push({ path: 'watch', query: {title: title} })
+        },
+
+        turnPage( page ) {
+            this.currentPage = page;
+            this.getLatestAnime();
+        },
+
+        gotoNextorPrevious( page ) {
+            if ( this.currentPage == 1 && page == -1 ) return;
+            this.currentPage = parseInt( this.currentPage ) + page;
+            this.getLatestAnime();
         }
+    },
+
+     mounted() {
+            this.getLatestAnime();
+            this.pages = [ ...Array( 5 ).keys() ]
+        },
+    
+    watch: {
+       
+    }
 
 }
 </script>
 
 <style>
+
+    nav {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
 </style>

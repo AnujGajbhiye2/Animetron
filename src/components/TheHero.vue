@@ -11,11 +11,12 @@
           <input
             type="text"
             class="form-control mb-2 mr-sm-2"
+            v-model="searchKeyword"
             id="inlineFormInputName2"
             placeholder="Search your favourite anime"
           />
 
-          <button type="submit" class="btn btn-primary mb-2">Search</button>
+          <button type="submit" class="btn btn-primary mb-2" @click="search()">Search</button>
         </form>
         </div>
         
@@ -25,7 +26,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data: () => ({
+    searchKeyword: ''
+  }),
+
+  methods: {
+    
+    search( ) {
+      if ( !this.searchKeyword ) return;
+      this.$router.push({ path: '/search', query: { 'keyword': this.searchKeyword }});
+    }
+  }
+};
 </script>
 
 <style scoped>

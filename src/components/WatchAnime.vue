@@ -98,11 +98,11 @@
     },
 
      watch: {
-    $route(to, from) {
-      // react to route changes...
-      if ( to.query != from.query ) {
-        window.location.reload()
-      }
+      $route(to, from) {
+        // react to route changes...
+        if ( to.query != from.query ) {
+          window.location.reload()
+        }
 
 
     }
