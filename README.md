@@ -3,7 +3,7 @@
 ## Download the lates Node.JS package
 [URL](https://nodejs.org/en/)
 
-## Clone the open the repository
+## Clone and open the repository
 
 ### Run Compiles and hot-reloads for development
 ```
