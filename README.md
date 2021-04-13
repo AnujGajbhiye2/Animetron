@@ -1,11 +1,11 @@
-# animetron
+# Animetron
 
-## Project setup
-```
-npm install
-```
+## Download the lates Node.JS package
+[URL](https://nodejs.org/en/)
 
-### Compiles and hot-reloads for development
+## Clone and open the repository
+
+### Run Compiles and hot-reloads for development
 ```
 npm run serve
 ```
