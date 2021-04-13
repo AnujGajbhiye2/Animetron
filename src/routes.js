@@ -24,7 +24,8 @@ export const routes = [
     },
     { 
         path: '/watch', 
-        component: WatchAnime
+        component: WatchAnime,
+        props: true
     },
     {
         path: '/search',

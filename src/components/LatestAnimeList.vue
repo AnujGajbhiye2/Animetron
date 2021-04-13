@@ -79,7 +79,7 @@ export default {
         },
 
         gotoAnimeWatcher( title ) {
-            this.$router.push({ path: 'watch', query: {title: title} })
+            this.$router.push({ path: 'watch', query: { title: title, totalEpisodes: parseInt( title.split('-')[title.split('-').length - 1] ) }})
         },
 
         turnPage( page ) {

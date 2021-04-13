@@ -1,10 +1,10 @@
 <template>
   <div>    
-    <div class="player-container">
-      <video :src="videoSource" width="100%" height="500" controls ref="videoPlayer"></video>
+    <div class="player-container" >
+      <video :src="videoSource" width="100%" height="500" controls ref="videoPlayer" ></video>
     </div>
     <div class="container">
-      <h4>
+      <h4 >
         {{videoInfo.title}}
       </h4>
       <strong>Category: </strong><span>{{videoInfo.category}}</span>
@@ -27,6 +27,7 @@
     },
 
     data: () => ({
+
       videoSource: '',
       videoInfo: {
         title: '',
@@ -37,7 +38,10 @@
       paginatedEpisodeList: [],
       start: 0,
       end: 20,
-      episodeNumber: 0
+      episodeNumber: 0,
+      totalEpisodes: 0,
+      
+
     }),
 
     computed: {
@@ -79,7 +83,7 @@
       gotoEpisode( selectedEpisodeNumber ) {
 
         this.updateEpisodeNumber();
-        this.$router.push({path: '/watch', query: { title: this.$route.query.title.replace( this.episodeNumber, selectedEpisodeNumber) }});
+        this.$router.push({path: '/watch', query: { title: this.$route.query.title.replace( this.episodeNumber, selectedEpisodeNumber), totalEpisodes: this.totalEpisodes  }});
         
       },
 
@@ -91,9 +95,26 @@
       },
 
       changeEpisode( val ) {
-        console.log( val );
-      }
 
+        this.gotoEpisode( this.episodeNumber + val );
+
+        if( this.episodeNumber === 1 && val === -1 )  {
+
+          alert('you have reached the beginning of the series.');
+
+        } else if ( !this.paginatedEpisodeList.includes( this.episodeNumber ) ) {
+          
+          this.buildPaginatedEpisode();
+
+        }
+
+      },
+
+      buildPaginatedEpisode() {
+        //TODO: add handling for pagination when user reload s the page and the current episode is not in the list
+        this.paginatedEpisodeList = this.episodeList.slice( this.start, this.end );
+
+      }
      
     },
 
@@ -102,23 +123,39 @@
       this.getVideo(); 
       this.updateEpisodeNumber();
 
-      this.episodeList = new Array( parseInt( this.episodeNumber ) );
-      this.episodeList = [ ...Array( parseInt( this.episodeNumber ) ).keys() ]
-      this.episodeList = this.episodeList.slice().reverse();
+      if ( this.$route.query.totalEpisodes ) {
+          this.totalEpisodes = this.$route.query.totalEpisodes;
+          this.episodeList = new Array( parseInt( this.totalEpisodes ) );
+          this.episodeList = [ ...Array( parseInt( this.totalEpisodes ) ).keys() ]
+          this.episodeList = this.episodeList.slice().reverse();
+      }
 
-      this.paginatedEpisodeList = this.episodeList.slice( this.start, this.end );
+      this.buildPaginatedEpisode();
+
+    },
+
+    beforeRouteUpdate( to, from, next ) {
+      next();
 
     },
 
      watch: {
-      $route(to, from) {
+      $route( to, from ) {
         // react to route changes...
         if ( to.query != from.query ) {
-          window.location.reload()
+          this.getVideo();
+          this.updateEpisodeNumber();
         }
+      },
 
-
-    }
+      // watch the episode number to change the paginated episode list
+      episodeNumber( nv ) {
+        if (( nv - 1 ) === this.paginatedEpisodeList.slice( -1 )[0] ) {
+          this.start = this.end - 1;
+          this.episodeList.length > this.end + 20 ? this.end += 20 : this.end = this.episodeList.length
+          this.buildPaginatedEpisode();
+        }
+      }
   }
 
   }

@@ -5,7 +5,7 @@
         <div class="card-body">
             <h6 class="card-title">{{title}}
                 <br>
-                <span class="badge badge-success">Episode {{link.split('-')[link.split('-').length - 1]}}</span>
+                <span class="badge badge-success">Episode {{ link.split('-')[link.split('-').length - 1] }}</span>
             </h6>
             <p class="card-text"></p>            
         </div>
