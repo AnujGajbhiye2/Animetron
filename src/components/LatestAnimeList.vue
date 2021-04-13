@@ -90,6 +90,9 @@ export default {
         gotoNextorPrevious( page ) {
             if ( this.currentPage == 1 && page == -1 ) return;
             this.currentPage = parseInt( this.currentPage ) + page;
+            if ( this.currentPage > 5 ) {
+                this.pages = this.pages.map( v => v + 1 );
+            }
             this.getLatestAnime();
         }
     },

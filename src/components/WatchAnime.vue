@@ -11,7 +11,7 @@
       <br>
       <strong>Anime Info: </strong><span>{{videoInfo.animeInfo}}</span>
       <hr>
-      <episode-list :paginatedEpisodeList="paginatedEpisodeList" @selectedEpisode="gotoEpisode" ></episode-list>
+      <episode-list :paginatedEpisodeList="paginatedEpisodeList" @selectedEpisode="gotoEpisode" :activeEpisode="episodeNumber" @changeEpisode="changeEpisode" ></episode-list>
       
     </div>
   </div>
@@ -45,7 +45,9 @@
     },
 
     methods: {
+
       getVideo() {
+
         this.$http.get( this.$url + this.$route.query.title )
         .then( (response) => {
           const html = response.data;
@@ -66,27 +68,38 @@
       },
 
       getSelectedVideoInfo( html ) {
+
         const $ = cheerio.load( html );
         this.videoInfo.title = $('div[class="title_name"]').find('h2').text();
         this.videoInfo.category = $('div[class="anime_video_body_cate"]').find('a').first().text();
         this.videoInfo.animeInfo = $('div[class="anime-info"]').find('a').text();
+
       },
 
       gotoEpisode( selectedEpisodeNumber ) {
+
         this.updateEpisodeNumber();
         this.$router.push({path: '/watch', query: { title: this.$route.query.title.replace( this.episodeNumber, selectedEpisodeNumber) }});
+        
       },
 
       updateEpisodeNumber() {
+
         let query = this.$route.query.title.split('-')
-        this.episodeNumber = query[ query.length - 1 ];
+        this.episodeNumber = parseInt( query[ query.length - 1 ] );
+
+      },
+
+      changeEpisode( val ) {
+        console.log( val );
       }
 
      
     },
 
     mounted() {
-      this.getVideo();
+
+      this.getVideo(); 
       this.updateEpisodeNumber();
 
       this.episodeList = new Array( parseInt( this.episodeNumber ) );

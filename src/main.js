@@ -7,7 +7,7 @@ import { routes } from './routes';
 
 Vue.config.productionTip = false
 Vue.prototype.$http = Axios;
-Vue.prototype.$url = 'https://gogoanime.ai/';
+Vue.prototype.$url = 'https://www1.gogoanime.ai/';
 
 Vue.use(VueRouter);
 

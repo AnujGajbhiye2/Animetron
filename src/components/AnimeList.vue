@@ -32,7 +32,7 @@
 
     methods: {
       showAnimeStartWithItem( chosenAlphabet ) {
-        this.$http.get('https://gogoanime.ai/anime-list-' + chosenAlphabet )
+        this.$http.get('https://www1.gogoanime.ai/anime-list-' + chosenAlphabet )
         .then((response) => {
             //handling the success
               const html = response.data;

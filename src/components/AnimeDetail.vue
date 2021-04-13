@@ -3,10 +3,10 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-4 col-md-4">
-            <img :src="category.img" :alt="category.title">
+            <img class="mt-35" :src="category.img" :alt="category.title">
           </div>
           <div class="col-lg-8 col-md-8">
-              <h3>{{ category.title }}</h3>
+              <h3 class="mt-7r">{{ category.title }}</h3>
               <strong>Genre: </strong> <p> {{ category.genre }} </p>
               <strong>Summary: </strong> <p> {{category.summary }} </p>
               <episode-list :paginatedEpisodeList="paginatedEpisodeList" @selectedEpisode="watchEpisode"></episode-list>
@@ -84,6 +84,12 @@
   }
 </script>
 
-<style>
+<style scoped>
+  .mt-35 {
+    margin-top: 35%;
+  }
 
-</style>
+  .mt-7r {
+    margin-top: 7rem;
+  }
+</style> 
