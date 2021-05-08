@@ -53,7 +53,7 @@ export default {
                 if( this.counter < 2 ) {
                     this.checkForAvailableSlot();
                 }
-            }, 3600000);
+            }, 3600);
         },
 
         formatDate( date ) {
