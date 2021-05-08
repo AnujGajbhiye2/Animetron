@@ -71,7 +71,7 @@ export default {
         },
 
         async checkForAvailableSlot() {
-            let response = await this.$http.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=365&date=${this.todaysDate}`);
+            let response = await this.$http.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=1&date=${this.todaysDate}`);
             // for (let i = 0; i < response.data.centers.length; i++) {
                 
 
