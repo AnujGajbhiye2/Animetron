@@ -6,20 +6,20 @@
 
     </div>
     <latest-anime-list></latest-anime-list>
-    <vaccination></vaccination>
+    <!-- <vaccination></vaccination> -->
   </div>
 </template>
 
 <script>
     import Hero from './TheHero';
     import LatestAnimeList from './LatestAnimeList';
-    import Vaccination from './Vaccination';
+    // import Vaccination from './Vaccination';
 
     export default {
         components: {
             appHero: Hero,
             LatestAnimeList,
-            Vaccination
+            // Vaccination
         }, 
 
        
